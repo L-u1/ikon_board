@@ -1,0 +1,158 @@
+#############################################################
+# Ikonboard v2.1
+# Copyright 2001 Ikonboard.com - All Rights Reserved
+# Ikonboard is a trademark of Ikonboard.com
+#
+# Software Distributed by: Ikonboard.com
+# Visit us online at http://www.ikonboard.com
+# Email us on boards@ikonboard.com
+#
+# All files written by Matthew Mecham
+#############################################################
+
+
+sub adminlogin {
+
+    $inmembername =~ s/\_/ /g;
+    print qq(
+    
+    <tr><td bgcolor="#333333" colspan=2><font face=verdana size=3 color=#FFFFFF>
+    <b>$ibtxt{'0208'}</b>
+    </td></tr>
+    <form action="$boardurl/$adminprog" method="post">
+    <input type=hidden name="action" value="login">
+    <tr>
+    <td bgcolor=#EEEEEE valign=middle colspan=2 align=center><font face=verdana color=#333333 size=3><b>$ibtxt{'0801'}</b></font></td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF valign=middle width=40% align=right><font face=verdana color=#555555 size=2>$ibtxt{'0306'}</font></td>
+    <td bgcolor=#FFFFFF valign=middle><input type=text name="membername" value="$inmembername" size=20></td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF valign=middle width=40% align=right><font face=verdana color=#555555 size=2>$ibtxt{'0307'}</font></td>
+    <td bgcolor=#FFFFFF valign=middle><input type=password name="password" value="$inpassword" size=20></td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF valign=middle colspan=2 align=center><input type=submit name="submit" value="$ibtxt{'0104'}"></form></td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF valign=middle align=left colspan=2><font face=verdana color=#555555 size=1>
+    <blockquote><b>$ibtxt{'0805'}</b><p>
+    <b>$ibtxt{'0806'}<br>
+    $ibtxt{'0807'}</b><p>
+    $ibtxt{'0808'}<br>
+    $ibtxt{'0809'}</blockquote>
+    </td></tr>
+    </table></td></tr></table>
+    );
+    
+}
+
+
+sub admintitle {
+    
+print qq~
+    <html>
+    <head>
+    <title>$ibtxt{'0810'}</title>
+    <style type="text/css">
+    <!--
+    SELECT, option, textarea, input {   FONT-FAMILY:verdana,arial;color:#000000; FONT-SIZE: 10px; background-color:#eeeeee  }
+    a:link,a:visited,a:active {text-decoration:none; color:#660000; font-weight:plain;}
+    a:hover {text-decoration:none; color:#990000; font-weight: plain;}
+    .large { FONT-FAMILY:verdana,arial;color:#990000; FONT-SIZE: 20px }
+    .body { FONT-FAMILY:verdana,arial;color:#333333; FONT-SIZE: 10px }
+    //-->
+    </style>
+    <script language="javascript"> 
+    function save_changes() { 
+    document.the_form.process.value="true"; 
+    } 
+    function preview_template() { 
+    document.the_form.target="_blank"; 
+    document.the_form.process.value="preview template";
+    }
+    </script>
+    </head>
+    <body bgcolor="#555555" topmargin=10 leftmargin=5>
+    <table width=95% cellpadding=0 cellspacing=1 border=0 bgcolor=#000000 align=center>
+    <tr><td>
+    <table width=100% cellpadding=0 cellspacing=1 border=0>
+    <tr><td width=25% valign=top bgcolor=#FFFFFF>
+    <table width=100% cellpadding=6 cellspacing=0 border=0>
+    <tr><td bgcolor="#333333"><font face=verdana size=3 color=#FFFFFF>
+    <b>$ibtxt{'0829'}</b>
+    </td></tr>
+    <tr>
+    <td bgcolor="#EEEEEE"><font face=verdana size=2 color=#333333><b>$ibtxt{'0811'}</b>
+    </td></tr>
+    <tr>
+    <td bgcolor="#FFFFFF"><font face=verdana size=2 color=#333333>
+    &raquo; <a href="$setmembersprog">$ibtxt{'0811'}</a>
+    </td></tr>
+    
+    <tr>
+    <td bgcolor="#EEEEEE"><font face=verdana size=2 color=#333333><b>$ibtxt{'0812'}</b>
+    </td></tr>
+    <tr>
+    <td bgcolor="#FFFFFF"><font face=verdana size=2 color=#333333>
+    &raquo; <a href="$setforumsprog">$ibtxt{'0812'}</a>
+    </td></tr>
+    
+    <tr>
+    <td bgcolor=#EEEEEE><font face=verdana size=2 color=#333333><b>$ibtxt{'0803'}</b>
+    </td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF><font face=verdana size=2 color=#333333>
+    &raquo; <a href="$stylesprog">$ibtxt{'0813'}</a><br>
+    &raquo; <a href="$varsprog">$ibtxt{'0814'}</a><br>
+    &raquo; <a href="$membertitlesprog">$ibtxt{'0815'}</a><br>
+    &raquo; <a href="setbadwords.cgi">$ibtxt{'0816'}</a>
+    </td></tr>
+    
+    <tr>
+    <td bgcolor=#EEEEEE><font face=verdana size=2 color=#333333><b>$ibtxt{'0821'}</b>
+    </td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF><font face=verdana size=2 color=#333333>
+    &raquo; <a href="checklog.cgi">$ibtxt{'0802'}</a><br>
+    &raquo; <a href="settemplate.cgi">$ibtxt{'0818'}</a><br><br>
+    &raquo; <a href="$boardurl/$forumsummaryprog">$ibtxt{'0819'}</a>
+    </td></tr>
+    
+    <tr>
+    <td bgcolor=#EEEEEE><font face=verdana size=2 color=#333333><b>$ibtxt{'0820'}.</b>
+    </td></tr>
+    <tr>
+    <td bgcolor=#FFFFFF align=left>
+    <span class="large">Ikonboard</span><span class="body">$versionnumber</span><p>
+    <font face=verdana size=1 color="#333333">
+    Ikonboard $ibtxt{'0823'} &copy; 2000 <a href="http://www.ikonboard.com/ikonboard" target="_parent">Ikonboard.com</a><p>
+    $ibtxt{'1438'} <a href="mailto:ikonboard\@ikondiscussion.com">$ibtxt{'0804'}</a> $ibtxt{'0825'}<p>
+    $ibtxt{'0826'} <a href="http://www.ikonboard.com/ikonboard/support">$ibtxt{'0827'}</a> $ibtxt{'0828'}
+    </td></tr></table>
+    </td><td width=70% valign=top bgcolor=#FFFFFF><table width=100% cellpadding=6 cellspacing=0 border=0>
+    ~;
+
+}
+
+
+
+sub parseadminform {
+    read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'});
+    @pairs = split(/&/, $buffer);
+    foreach $pair (@pairs) {
+        ($name, $value) = split(/=/, $pair);
+        $value =~ tr/+/ /;
+        $value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
+        $name =~ tr/+/ /;
+        $name =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
+        $value =~ s/\|/&brvbar\;/g;
+        $value =~ s/\"/&quot\;/g;
+        $value =~ s/\</&lt\;/g;
+        $value =~ s/\>/&gt\;/g;
+        $value =~ s/\;/\\\;/g;
+        $value =~ s/<!--(.|\n)*-->//g;
+        $header =~ s/\@/\\\@/g;
+        $FORM{$name} = $value;
+        }
+    }
+
+1;  
+

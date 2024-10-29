@@ -1,0 +1,188 @@
+<html>
+<head><title>Installation</title></head>
+<body bgcolor="#FFFFFF" text="#000000">
+<table align=center width=80% border=0>
+<tr><td>
+<font face="verdana" size="2">
+
+<font size="5" face="Trebuchet MS" color="#000099">
+<b>Installing Ikonboard</b>
+</font> 
+<hr size="1" color="#333333" noshade>
+<br>
+<br>
+<font size=2>
+<b>Welcome to Ikonboard v2.1.9</b>
+<br>
+<br>
+Important note:: If you are upgrading, please use the 'upgrade.html' file!
+<br>
+Please take a few moments to read through this documentation, even if you have
+experience in setting up Perl scripts. Many problems reported on the support forums
+are caused by bad installations. We've tried to make things as easy as possible to 
+set up - so if all goes well, you'll be logging in to your administration center in 10 minutes!
+<br>
+<br>
+<b>What do I need?</b>
+<br>
+<br>
+You'll need some Webspace (about 20megs) that has Perl 5.005 enabled. If you are unsure, please contact your
+web host. You'll need a web browser (IE4.5+, or NN4.5+) and an FTP client to upload the files.<br>
+You'll also need your path to perl, it's usually '#!/usr/bin/perl', if you are unsure ask your web host.
+<br><br>
+<b>Step 1:: Setting up the 'cgi' directories</b>
+<br>
+In your 'CGI-BIN' directory create a directory called 'ikonboard' and create the following directories.
+<br>
+<br>cgi-bin/ikonboard<font color="red">/data</font>
+<br>cgi-bin/ikonboard<font color="red">/help</font>
+<br>cgi-bin/ikonboard<font color="red">/members</font>
+<br>cgi-bin/ikonboard<font color="red">/messages</font>
+</font>
+<p>
+<font size=2>
+<br>
+Set the CHMOD (or Permissions) value to '0777' (drwxrwxrwx).<br>If your webhost will not allow this, set the CHMOD value to '0755' (-rwxr-xr-x).
+<br><br>
+If you do not have a 'CGI-BIN' directory, then first create a directory called 'cgi-bin' and then inside that create the 'ikonboard' directory.
+<br><br>
+<b>Step 2:: Setting up the 'non cgi' directories</b>
+<br>
+In the 'public' part of your web space (usually the directory is called 'public', 'public_html', 'www' .<i>etc</i>) Create another directory called 'ikonboard' and in that new directory, create the following directories.
+<br>
+<br>/ikonboard<font color="red">/emoticons/</font>
+<br>/ikonboard<font color="red">/avatars/</font>
+<br>/ikonboard<font color="red">/images/</font>
+<br>
+<br>
+<b>Step 3:: Uploading the files to your webspace</b>
+<br>
+<br>
+Using your FTP client, upload the files as follows.
+<br><br>
+<b>'Non-cgi directories'</b>
+<br><br>
+If you open up the folder from the Ikonboard zip file called 'non-cgi', you'll see three folders
+inside of that called 'avatars', 'emoticons' and 'images'.
+<br>
+All of these files must be uploaded in BINARY (Graphic) mode in your FTP client.
+<br>Upload these files into the corresponding directories you created in the 'non cgi' part of your webspace.
+<br>Upload the contents of images folder into 'ikonboard/images' for example.
+<br>Repeat this with the 'avatars' and 'emoticons folders, uploading them into the directory with the same name on your webspace.
+<br><br>
+<b>CGI directories</b>
+<br>
+<br>
+All of these files must be uploaded in ASCII mode, with CHMOD permissions set to '0755' (-rwxr-xr-x).
+<br>Local means the Ikonboard zip file you downloaded and unzipped.
+<br>Upload the contents of the local 'data' folder into the 'cgi-bin/ikonboard/data/' directory you created on your webspace.
+<br>Repeat this with the local 'help' folder, uploading it to the directory you created on your webspace.
+<br><br>
+Finally upload the *.cgi files that are left (admincenter.cgi, announcements.cgi <i>etc</i>) into the 'cgi-bin/ikonboard/' directory.
+<br><br>
+<b>Step 4:: Time to run the Ikonboard Installer</b>
+<br><br>
+To make things as easy as possible, we've created an installer that'll help you get your board configured correctly.<br>
+Please take the time to read the instructions as you configure your board. If you get any error messages please go back and double
+check all the information you provided. Your web host will be able to answer all the questions for you.
+<br>
+<br>
+<b>4(a):: Starting the installer</b>
+<br><br>
+Using your web browser, go to your installer by entering the following address. 'www.yourdomain.com/cgi-bin/ikonboard/install.cgi'
+(Substitute 'www.yourdomain.com' with your URL).
+<br>
+Take a few moments to read through the information.
+<br><br>
+<b>4(b):: Using the installer</b>
+<br><br>
+Please enter the information that is requested. Please ensure that you enter the details in the correct format.<br>
+Once you have entered the information for the first screen, hit 'submit'. You'll be then told of any errors you made while
+entering that information.<br>
+If everything is correct, please click on 'Step 3'.<br>
+If you get a 'cannot find boardinfo.cgi' message, please go back to step one and check the CHMOD permission on the data directory. It needs
+to be sufficient to let the scripts write into it. If the permissions are set correctly and it still returns an error, double
+check the paths you entered.<br><br>
+<b>4(b):: Creating an administrator</b>
+<br>
+<br>
+This section will let you set yourself as the board administrator.<br>
+Please enter a username and password. Make sure you don't use any non-ascii characters such as '*', '?', '|', ';', '"', <i>etc</i>
+<br><br>
+If you are happy that the information is correct, click on the submit button.
+<br>
+<br>You should then be able to log into your administration center.
+<br>
+<br>
+<b>Step 5:: Time to set up your board</b>
+<br>
+<br>
+The administration center is the 'Nerve Center' of your new Ikonboard. This is where you can create, edit and delete categories and
+forums, edit, ban and review your members. You can also change any of the information that you entered using the installer, edit
+the board's styles (colors) and edit the board template the suit your website.
+<br>
+<br>
+Click on 'Forum control'. It's time to set up a Category and Forum.<br>
+A Category is a group of forums, usually they are linked by a common theme. For example, if your website was about
+'Food', you may have a Category and Forum set up like:
+<br>
+<br>- Fruit (Category Name)
+<br>--- Choosing the right fruit (Forum name)
+<br>--- Cooking with fruit (Forum Name)
+<br>- Meat (Category Name)
+<br>--- How to prepare meat (Forum Name)
+<br>--- Where to find the best meat (Forum Name)
+<br><br>
+Once you are inside 'Forum Control' you'll see the following options: 'Reorder Current Categories' and 'Add New Category and Forum'.
+<br>Click on 'Add New Category and Forum'.
+<br><br>
+You'll then be presented with a form titled 'New Category and Forum set-up'.
+<br><br>Enter the Category name, our example used 'Fruit' as the name for the first category.<br><br>
+Then, enter the Forum name, our example used 'Choosing the right fruit' as the first forum name.
+<br><br>Enter a short description to summarise what the forum is about. Our example may use 'Tips on how to find the right fruit'
+<br><br>Enter the names of the Forum Moderator(s). A moderator will be able to 'moderate' the forum. They will be able to lock,
+unlock, delete and move topics as well as deleting messages. If you don't want a moderator for now, then simply leave it blank.
+<br><br>Set up the rest of the options. If you wish to make the Forum 'private' then switch it to 'yes'. You'll need (via the admin
+center) to give permission to each member you want to allow access to in the private forum. You can only do this once the private
+forum has been set up.
+<br>
+<br>
+Once you are happy that all the information is correct, simply click on the 'Submit' button.
+<br><br>
+The next page will tell you if this action was successful or not. Please read this carefully.
+<br>If you get a message saying 'Forum1 not created'. Then hit the back button of your browser. Then using your FTP client create
+a directory called 'forum1' in 'cgi-bin/ikonboard'. The scripts should create this for you, but in some cases it cannot due to the
+permissions set by your web host.
+<br>Go back to your web-browser and re-submit the information.
+<br><br>
+<b>Step 6:: You're done!</b>
+<br><br>
+Clicking on the 'Go to your board' will take you to your new Ikonboard.<br>
+Have a click around and try posting some test messages. You can always delete them later.
+<br>
+If you need some more help on how to use the features of Ikonboard, click on the 'help' link in the top menu bar.<br>
+To access the Moderation Features 'help' you'll need to enter your Username and Password at the bottom of the help window.
+<br><br>
+<b>::Help and support::</b>
+<br><br>
+If you need any help, then please visit our <a href="http://forums.ikonboard.com/">support forums</a>
+Please help us by including as much information as you can, like which script caused the error, what version you are using - what action
+caused the error and where ever possible, a link to your Ikonboard.
+<br>Please do not email us, we get a lot of email and do not have the time to reply. You'll get a far faster answer from our
+support board. We currently have over 1,300 members who can try to help.
+<br><br>
+Thanks for supporting Ikonboard!
+<br>
+<br>
+--Matt, Ikonboard Author.
+<br>
+</p>
+</td></tr></table>
+</body>
+</html>
+
+
+
+
+
+

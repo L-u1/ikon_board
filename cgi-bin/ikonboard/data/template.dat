@@ -1,0 +1,66 @@
+<html>
+  <head>
+    
+    <title>$page_title</title>
+
+
+<!--Javascript-->
+
+<script type="text/javascript">
+
+function openScript(url, width, height) {
+        var Win = window.open(url,"openScript",'width=' + width + ',height=' + height + ',resizable=1,scrollbars=yes,menubar=yes,status=yes' );
+}
+
+</script>
+
+<script type="text/javascript">
+
+clckcnt = 0;
+function clckcntr() {
+clckcnt++;
+if(clckcnt > 1) {
+    if(clckcnt > 2) { return false; }
+    alert('Processing...\n\n' + '     Thank you for your patience.');
+    return false;}
+return true;}
+
+</script>
+
+
+
+<!--end Java-->
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+
+<!--css info(editable)-->
+
+<style type="text/css">
+SELECT, option, textarea, input {   FONT-FAMILY:verdana,arial;color:#000000; FONT-SIZE: 12px; background-color:#eeeeee  }
+a:link,a:visited,a:active {text-decoration:none; color:#000099; font-weight:plain;}
+a:hover {text-decoration:none; color:#0000ff; font-weight: plain;}
+.bottom { vertical-align: bottom }
+.top { vertical-align: top }
+.poster { FONT-SIZE: 12px }
+.n2{font-family: Verdana, Arial; font-size: 9pt} 
+.s{font-family: Verdana, Arial; font-size: 8pt} 
+</style>
+
+<!--end css info-->
+
+</head>
+
+<body bgcolor="#ffffff" alink="#333333" vlink="#333333" link="#333333" topmargin="5" leftmargin="0">
+
+<p>
+
+
+$ikonboard_main
+
+
+<p>
+</body>
+</html>
+    
+
+   
+   

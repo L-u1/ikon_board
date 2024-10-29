@@ -1,0 +1,1402 @@
+#############################################################
+# Ikonboard v2.1
+# Copyright 2001 Ikonboard.com - All Rights Reserved
+# Ikonboard is a trademark of Ikonboard.com Group
+#
+# Software Distributed by: Ikonboard.com
+# Visit us online at http://www.ikonboard.com
+# Email us on boards@ikonboard.com
+#
+# All files written by Matthew Mecham
+#############################################################
+
+# require "$ikondir" . "IkonGerman.lib";     # подключение файла германского языка
+# require "$ikondir" . "IkonIs.lib";     # Require Language.lib
+require "$ikondir" . "IkonRussian.lib";     # подключение файла русского языка
+# require "$ikondir" . "IkonTurkish.lib";     # подключение файла турецкого языка
+# require "$ikondir" . "IkonPortugueseBr.lib";     # подключение файла португального языка
+
+### Code buttons (bloody huuuge routine)
+sub codebuttons {
+$headcb = qq~
+<SCRIPT language=JavaScript src=$imagesurl/codebuttons.js></script>
+<script language=JavaScript>
+helpstat = false;
+stprompt = true;
+basic = false;
+
+var head="display:''"
+
+function doit(header){
+var head=header.style
+if (helpstat) { 
+head.display=""
+}
+else if (basic) { 
+head.display=""
+}
+else if (stprompt) { 
+head.display=""
+}
+else {
+head.display="none"
+}
+}
+
+function xspand(header){
+var head=header.style
+if (head.display == "none") { 
+head.display=""
+}
+else {
+head.display="none"
+}
+}
+
+function thelp(swtch){
+	if (swtch == 1){
+		basic = false;
+		stprompt = false;
+		helpstat = true;
+	} else if (swtch == 0) {
+		helpstat = false;
+		stprompt = false;
+		basic = true;
+	} else if (swtch == 2) {
+		helpstat = false;
+		basic = false;
+		stprompt = true;
+	} else {
+		helpstat = false;
+		basic = false;
+		stprompt = false;
+	}
+}
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_displayStatusMsg(msgStr) { //v1.0
+  status=msgStr;
+  document.MM_returnValue = true;
+}
+//-->
+</script>
+
+~;
+
+$bodycb = qq~
+<script>
+javascript:MM_preloadImages('$imagesurl/cb/bold_2.gif','$imagesurl/cb/italicize_2.gif','$imagesurl/cb/underline_2.gif','$imagesurl/cb/center_2.gif','$imagesurl/cb/url_2.gif','$imagesurl/cb/email_2.gif','$imagesurl/cb/image_2.gif','$imagesurl/cb/code_2.gif','$imagesurl/cb/quote_2.gif','$imagesurl/cb/smilie_2.gif','$imagesurl/cb/translate_2.gif','$imagesurl/cb/list_2.gif','$imagesurl/cb/help_2.gif','$imagesurl/cb/sound_2.gif','$imagesurl/cb/attach_2.gif')
+</script>
+<CENTER>
+<TABLE border=0 cellPadding=4 cellSpacing=1 width="100%">
+<TBODY>
+<TR bgcolor=$miscbackone>
+<TD>
+<TABLE border=0>
+<TBODY>
+<TR>
+<TD align=middle><SPAN id=buttons>
+<TABLE>
+<TBODY>
+<TR>
+<TD>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+<TBODY>
+<TR>
+<TD>
+<SELECT name=font onchange=showfont(this.options[this.selectedIndex].value)> 
+<OPTION value="Andale Mono">Andale Mono</OPTION> 
+<OPTION value=Arial>Arial</OPTION>
+<OPTION value="Arial Black">Arial Black</OPTION>
+<OPTION value="Book Antiqua">Book Antiqua</OPTION> 
+<OPTION value="Century Gothic">Century Gothic</OPTION>
+<OPTION value="Comic Sans MS">Comic Sans MS</OPTION> 
+<OPTION value="Courier New">Courier New</OPTION> 
+<OPTION value=Georgia>Georgia</OPTION>
+<OPTION value=Impact>Impact</OPTION>
+<OPTION value=Tahoma>Tahoma</OPTION>
+<OPTION value="Times New Roman">Times New Roman</OPTION> 
+<OPTION value="Trebuchet MS">Trebuchet MS</OPTION>
+<OPTION value="Script MT Bold">Script MT Bold</OPTION> 
+<OPTION value=Stencil>Stencil</OPTION>
+<OPTION selected value=Verdana>Verdana</OPTION>
+<OPTION value="Lucida Console">Lucida Console</OPTION>
+</SELECT> 
+<SELECT name=size onchange=showsize(this.options[this.selectedIndex].value)> 
+<OPTION value=-2>-2</OPTION>
+<OPTION value=-1>-1</OPTION>
+<OPTION value=1>1</OPTION> 
+<OPTION value=2>2</OPTION>
+<OPTION selected value=3>3</OPTION>
+<OPTION value=4>4</OPTION> 
+<OPTION value=5>5</OPTION>
+<OPTION value=6>6</OPTION>
+</SELECT>
+<SELECT name=color onchange=showcolor(this.options[this.selectedIndex].value)> 
+<OPTION selected value=White>Белым</OPTION> 
+<OPTION value=Black>Черным</OPTION>
+<OPTION value=Red>Красным</OPTION>
+<OPTION value=Yellow>Желтым</OPTION>
+<OPTION value=Pink>Розовым</OPTION>
+<OPTION value=Green>Зеленым</OPTION>
+<OPTION value=Orange>Оранжевым</OPTION>
+<OPTION value=Purple>Пурпурным</OPTION>
+<OPTION value=Blue>Гоубым</OPTION>
+<OPTION value=Beige>Бежевым</OPTION>
+<OPTION value=Brown>Коричневым</OPTION>
+<OPTION value=Teal>Teal</OPTION>
+<OPTION value=Navy>Navy</OPTION>
+<OPTION value=Maroon>Бордовым</OPTION>
+<OPTION value=LimeGreen>LimeGreen</OPTION>
+</SELECT>
+</TD><TD align=right>
+<A href="javascript:;" onclick=openScript('misc.cgi?action=ikoncode',500,400) onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('help','','$imagesurl/cb/help_2.gif',1);MM_displayStatusMsg('Help');return document.MM_returnValue"><IMG alt="Click for Ikoncode Code Help" border=0 height=22 name=help src="$imagesurl/cb/help.gif" width=23></A>
+</TD></TR></TBODY></TABLE></TD></TR><TR><TD>
+<A href="javascript:;" onclick=bold() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Bold','','$imagesurl/cb/bold_2.gif',1);MM_displayStatusMsg('Insert Bold Text Into Your Message');return document.MM_returnValue"><IMG alt=Bold border=0 height=22 name=Bold src="$imagesurl/cb/bold.gif" width=23></A><A href="javascript:;" onclick=italicize() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Italic','','$imagesurl/cb/italicize_2.gif',1);MM_displayStatusMsg('Insert Italicized Text Into Your Message');return document.MM_returnValue"><IMG alt=Italicized border=0 height=22 name=Italic src="$imagesurl/cb/italicize.gif" width=23></A><A href="javascript:;" onclick=underline() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Underline','','$imagesurl/cb/underline_2.gif',1);MM_displayStatusMsg('Insert Underlined Text Into Your Message');return document.MM_returnValue"><IMG alt=Underline border=0 height=22 name=Underline src="$imagesurl/cb/underline.gif" width=23></A>
+<A href="javascript:;" onclick=center() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Center','','$imagesurl/cb/center_2.gif',1);MM_displayStatusMsg('Insert Centered Text Into Your Message');return document.MM_returnValue"><IMG alt=Centered border=0 height=22 name=Center src="$imagesurl/cb/center.gif" width=23></A>
+<A href="javascript:;" onclick=hyperlink() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Link','','$imagesurl/cb/url_2.gif',1);MM_displayStatusMsg('Insert A Link Into Your Message');return document.MM_returnValue"><IMG alt="Insert Hyperlink" border=0 height=22 name=Link src="$imagesurl/cb/url.gif" width=23></A><A href="javascript:;" onclick=flash() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Flash','','$imagesurl/cb/flash_2.gif',1);MM_displayStatusMsg('Insert A Flash Animation Into Your Message');return document.MM_returnValue"><IMG alt="Insert Flash" border=0 height=22 name=Flash src="$imagesurl/cb/flash.gif" width=23></A><A href="javascript:;" onclick=email() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Mail','','$imagesurl/cb/email_2.gif',1);MM_displayStatusMsg('Insert An Email Link Into Your Message');return document.MM_returnValue"><IMG alt="Insert Email" border=0 height=22 name=Mail src="$imagesurl/cb/email.gif" width=23></A><A href="javascript:;" onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onclick=image() onmouseover="MM_swapImage('Image','','$imagesurl/cb/image_2.gif',1);MM_displayStatusMsg('Insert An Image Into Your Message');return document.MM_returnValue"><IMG alt="Insert Image" border=0 height=22 name=Image src="$imagesurl/cb/image.gif" width=23></A>
+<A href="javascript:;" onclick=sound() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Sound','','$imagesurl/cb/sound_2.gif',1);MM_displayStatusMsg('Insert sound into your post');return document.MM_returnValue"><IMG alt="Insert sound into your post" border=0 height=22 name=Sound src="$imagesurl/cb/sound.gif" width=23></A>
+<A href="javascript:;" onclick=showcode() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Code','','$imagesurl/cb/code_2.gif',1);MM_displayStatusMsg('Insert Code Into Your Message');return document.MM_returnValue"><IMG alt="Insert Code" border=0 height=22 name=Code src="$imagesurl/cb/code.gif" width=23></A><A href="javascript:;" onclick=quote() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Quote','','$imagesurl/cb/quote_2.gif',1);MM_displayStatusMsg('Insert A Quote Into Your Message');return document.MM_returnValue"><IMG alt="Insert Quote" border=0 height=22 name=Quote src="$imagesurl/cb/quote.gif" width=23></A><A href="javascript:;" onclick=list() onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('List','','$imagesurl/cb/list_2.gif',1);MM_displayStatusMsg('Insert A List Into Your Message');return document.MM_returnValue"><IMG alt="Insert List" border=0 height=22 name=List src="$imagesurl/cb/list.gif" width=23></A>
+<A href="javascript:;" onclick=openScript('misc.cgi?action=showsmilies',300,350) onmouseout="MM_swapImgRestore();MM_displayStatusMsg('');return document.MM_returnValue" onmouseover="MM_swapImage('Smilie','','$imagesurl/cb/smilie_2.gif',1);MM_displayStatusMsg('Insert A Smilie Into Your Message');return document.MM_returnValue"><IMG alt="Insert Smilie" border=0 height=22 name=Smilie src="$imagesurl/cb/smilie.gif" width=23></A>
+</TD></TR></TBODY></TABLE></SPAN></TD></TR><TR><TD>
+~;
+
+$Agent = $ENV{'HTTP_USER_AGENT'};
+if ($Agent =~ /MSIE/i) {
+$endcb =  qq~
+</TD></TR><TR><TD align=middle>
+<font face="$font" color=$fontcolormisc size=1><B>Mode:</B> 
+<INPUT name=mode onclick=thelp(3);doit(buttons) type=radio value=off>&nbsp;&nbsp;Off&nbsp;&nbsp;
+<INPUT name=mode onclick=thelp(1);doit(buttons) type=radio value=help>&nbsp;&nbsp;Help&nbsp;&nbsp;
+<INPUT CHECKED name=mode onclick=thelp(2);doit(buttons) type=radio value=prompt>&nbsp;&nbsp;Prompt&nbsp;&nbsp;
+<INPUT name=mode onclick=thelp(0);doit(buttons) type=radio value=basic>&nbsp;&nbsp;Inline
+</FONT></FONT></TD></TR></TBODY></TABLE></table>
+~;
+} else {
+$endcb =  qq~
+</TD></TR><TR><TD align=middle>
+</FONT></FONT></TD></TR></TBODY></TABLE></table>
+~;
+} ### end if
+} ### end of code buttons
+
+sub checkVALIDITY {
+$rm = $query->request_method();
+$rr = $query->referer();
+if (($rm eq 'POST') and ($rr !~ /$boardurl/i)) {
+$timenow = time;
+$longdate = &longdate("$timenow");
+$shorttime = &shorttime("$timenow");
+$filetoopen = "$ikondir" . "data/hacklog.cgi";
+open(LOG, ">>$filetoopen");
+print LOG qq~------$ibtxt{'5002'}------\n~;
+print LOG qq~<hr><b>$ibtxt{'5003'}</b> - $error<br><br>~;
+print LOG qq~<b>$ibtxt{'5004'}</b> - $longdate, $shorttime<br><br>~;
+print LOG qq~<b>$ibtxt{'5005'}</b><br>~;
+foreach (sort keys %ENV) {
+  chomp $_;
+  print LOG qq~<b>$_</b> = $ENV{$_}<br>~ unless (/password/i);
+  }
+print LOG "<hr>\n";
+close(LOG);
+}
+}
+
+###########################
+# system error
+
+sub systemerror {
+my $error = shift;
+
+$timenow = time;
+$longdate = &longdate("$timenow");
+$shorttime = &shorttime("$timenow");
+$filetoopen = "$ikondir" . "data/hacklog.cgi";
+open(LOG, ">>$filetoopen");
+print LOG qq~------$ibtxt{'5002'}------\n~;
+print LOG qq~<hr><b>$ibtxt{'5003'}</b> - $error<br><br>~;
+print LOG qq~<b>$ibtxt{'5004'}</b> - $longdate, $shorttime<br><br>~;
+print LOG qq~<b>$ibtxt{'5005'}</b><br>~;
+foreach (sort keys %ENV) {
+  chomp $_;
+  print LOG qq~<b>$_</b> = $ENV{$_}<br>~ unless (/password/i);
+  }
+print LOG "<hr>\n";
+close(LOG);
+
+print header('text/html; charset=windows-1251'); print start_html('System error');
+print qq~
+<font face=verdana size=$dfontsize3 color=#333333>
+<h1>$ibtxt{'0101'}</h1>
+<p>
+$ibtxt{'0102'} $error
+<p>
+$ibtxt{'0103'}
+<br><br>
+<b>$ibtxt{'5006'}</b>
+<font size=$dfontsize2 color="#FF0000">
+<hr><br>
+~;
+foreach (sort keys %ENV) {
+	print "<b>$_</b><br>" unless (/password/i);
+  }
+print qq~
+<hr>
+<br>
+<font size=$dfontsize2 color="#000000">
+$ibtxt{'5007'}
+~;
+print end_html;
+exit;
+}
+
+###########################
+# Ikon Board Miscellaneous Header
+
+
+sub mischeader {
+local($misctype) = @_;          
+            
+            $filetoopen = "$ikondir" . "data/allforums.cgi";
+            $filetoopen = &stripMETA($filetoopen);
+            open(FILE, "$filetoopen") or die "$ibtxt{'5008'}";
+              flock(FILE, 2);
+            @forums = <FILE>;
+            close(FILE);
+            
+            foreach $forumline (@forums) { #start foreach @forums
+                ($tempno, $trash) = split(/\|/,$forumline);
+                    if ($inforum eq $tempno) {
+                        ($forumid, $category, $categoryplace, $forumname, $forumdescription, $forummoderator ,$htmlstate ,$idmbcodestate ,$privateforum, $startnewthreads ,$lastposter ,$lastposttime, $threads, $posts, $forumgraphic) = split(/\|/,$forumline);
+                        }
+                    }
+            
+            
+            ### Grab the threadstate and topic title
+            
+            $filetoopen = "$ikondir" . "forum$inforum/list.cgi";
+            $filetoopen = &stripMETA($filetoopen);
+            open(FILE, "$filetoopen");
+              flock(FILE,2);
+            @allthreads = <FILE>;
+            close(FILE);
+    
+            foreach $line (@allthreads) { #start foreach @threads
+                ($tempno, $trash) = split(/\|/, $line);
+                if ($intopic eq $tempno) {
+                ($trash, $topictitle, $topicdescription, $threadstate, $trash) = split(/\|/,$line);
+                }
+            } # end foreach
+            
+        
+            if ($forumgraphic) {
+                $forumgraphic = qq~<a href="$forumsprog?forum=$inforum"><img src="$imagesurl/images/$forumgraphic" border=0></a>~;
+                }
+                else {
+                    $forumgraphic = qq~<a href="$boardurl/$forumsummaryprog"><img src="$imagesurl/images/$boardlogo" border=0></a>~;
+                    }
+                    
+            &title;
+            
+            $inmembername =~ s/\_/ /g;
+            
+            $output .= qq~
+            
+            <table cellpadding=0 cellspacing=0 border=0 width=$tablewidth align=center>
+                <tr>
+                    <td width=30% rowspan=2>
+                    $forumgraphic
+                    </td>
+                    <td valign=top align=left>
+                        <font face=$font color=$fontcolormisc size=$dfontsize2>
+                        &nbsp;&nbsp;<img src="$imagesurl/images/closedfold.gif" border=0><a href="$forumsummaryprog">&nbsp;&nbsp;$boardname</a>
+	                    <br>
+                        &nbsp;&nbsp;<img src="$imagesurl/images/bar.gif" border=0><img src="$imagesurl/images/closedfold.gif" border=0>&nbsp;&nbsp;<a href="$forumsprog?forum=$inforum">$forumname</a>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="$imagesurl/images/bar.gif" border=0><img src="$imagesurl/images/openfold.gif" border=0>&nbsp;&nbsp;$misctype
+                    </td>
+                    $usermenu
+                </tr>
+            </table>
+            
+            <p>
+            ~;
+            
+} # end misc header
+
+
+###########################
+# Ikon Board Header
+
+sub title {
+
+
+$newmail = "<p>";  
+
+if ($inmembername eq "" || $inmembername eq "$ibtxt{'0043'}") {
+    $inmembername = "$ibtxt{'0043'}";
+    $loggedinas = qq~$ibtxt{'0043'}: <a href="$loginprog">$ibtxt{'0104'}</a> | <a href="$registerprog">$ibtxt{'0105'}</a> | <a href="$lostpasswordprog">$ibtxt{'0112'}</a>~;
+    }
+    else {
+        $memberfilename = $inmembername;
+        $memberfilename =~ s/ /\_/g;
+
+        &systemerror("Возможная попытка взлома. Имя пользователя слишком линное!") if length($memberfilename) > 32;
+
+        $filetoopen = "$ikondir". "messages/$memberfilename" . "_msg.cgi";
+        open (FILE, "$filetoopen");
+        @allmessages = <FILE>;
+        close (FILE);
+        
+        $unread = 0;
+        
+        foreach (@allmessages) {
+            ($trash, $readstate) = split(/\|/,$_);
+            if ($readstate eq "no") {
+                $unread++;
+                }
+            }
+            
+        $newmail = qq(<table width=$tablewidth cellpadding=2 cellspacing=0 align=center>
+                        <tr>
+                          <td align=right valign=middle>
+                            <a href="javascript:openScript('$messengerprog',600,400)"><img src="$imagesurl/images/newmail.gif" border=0></a>
+                          </td>
+                      </tr>
+                      </table>) if $unread;
+        $loggedinas = qq~$inmembername: <a href="$loginprog?action=logout">$ibtxt{'0106'}</a> | <a href="javascript:openScript('$messengerprog',600,400)">$ibtxt{'0107'}</a> | <a href="javascript:openScript('$boardurl/$newpostsprog',500,400)">$ibtxt{'0108'}</a> | <a href="$forumsummaryprog?action=resetall">$ibtxt{'0109'}</a>~;
+        }
+
+
+$output = qq~
+
+<table width="$tablewidth" align="center" cellspacing="1" cellpadding="0"  border="0" bgcolor=$titleborder>
+  <tr>
+    <td bgcolor=$titleborder>
+      <table width="100%" cellspacing="0" cellpadding="4" border="0">
+        <tr>
+        <td bgcolor=$titleback><font face=$font color=$titlefont size=$dfontsize4><b>&raquo; $boardname &laquo;</font></b><br><font face=$font color=$titlefont size=$dfontsize2>$boarddescription</font></td>
+        <td bgcolor=$titleback align=right valign=bottom><font face=$font color=$titlefont size=$dfontsize1><a href="$homeurl">&raquo; $ibtxt{'0110'} $homename</a></font></td>
+        </tr>
+            <tr>
+            <td bgcolor=$menubackground colspan=2>
+                <font face=$font color=$menufontcolor size=$dfontsize2>
+                <a href="$homeurl">Главная</a> | <a href="$profileprog">$ibtxt{'0111'}</a> | <a href="$onlineprog">$ibtxt{'0113'}</a> | <a href="javascript:openScript('$helpprog',500,400)">$ibtxt{'0114'}</a> | <a href="$searchprog">$ibtxt{'0119'}</a>
+                ~;
+                &getmember($inmembername);
+	            if ($membercode eq "ad") {
+                $output .= qq~ | <a href=admincenter.cgi>Админцентр</a>~;
+                }                
+                $output .= qq~
+                </font>
+            </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+</table>
+<p>
+<table width="$tablewidth" align="center" cellspacing="0" cellpadding="1"  border="0" bgcolor=$titleborder>
+  <tr>
+    <td>
+      <table width="100%" cellspacing="0" cellpadding="4" border="0">
+        <tr>
+        <td bgcolor=$menubackground valign="middle">
+            <font face=$font color=$menufontcolor size=$dfontsize1>
+            &raquo; $ibtxt{'0115'} $loggedinas 
+            </font>
+            </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+</table>
+$newmail
+~;
+
+if ($forumlastvisit) {
+    $flv= $forumlastvisit + ($timedifferencevalue*3600) + ($timezone*3600);
+    $flongdate = &longdate("$flv");
+    $fshorttime = &shorttime("$flv");
+    $lastvisitdata = qq~ $ibtxt{'0116'}: $flongdate - $fshorttime~;
+    }
+    else {
+        $lastvisitdata = qq~ $ibtxt{'0117'} $forumname~;
+        }
+
+$uservisitdata = qq~
+    <tr>
+        <td valign=bottom align=right>
+        <font face=$font color=$menufontcolor size=$dfontsize1>
+        <a href="$forumsprog?forum=$inforum&action=resetposts">$ibtxt{'0118'}</a> &nbsp; <a href="javascript:openScript('$helpprog?helpon=$helptype',500,400)">[ $ibtxt{'0114'} ]</a><br>&raquo; $lastvisitdata &laquo; 
+        </font>
+        </td>
+    </tr>
+    ~;      
+
+}           
+
+
+###########################
+# forummoderator routine
+
+sub moderator {
+
+$filetoopen = "$ikondir" . "data/allforums.cgi";
+$filetoopen = &stripMETA($filetoopen);
+open(FILE, "$filetoopen") or die "$ibtxt{'5008'}";
+  flock (FILE,2);
+@forums = <FILE>;
+close(FILE);
+            
+foreach $forumline (@forums) { #start foreach @forums
+    ($tempno, $trash) = split(/\|/,$forumline);
+        if ($inforum eq $tempno) {
+            ($trash, $trash, $trash, $trash, $trash, $forummoderator ,$trash, $trash, $trash, $startnewthreads) = split(/\|/,$forumline);
+            }
+        }
+
+$forummoderator =~ s/\, /\,/gi;
+@forummodnames = split(/\,/, $forummoderator);
+$totalmods = @forummodnames;
+$modcount = 1;
+$inmembmod = "no";
+
+foreach $name (@forummodnames) {
+    chomp $name;
+    $cleanedmodname = $name;
+    $cleanedmodname =~ s/ /\_/g;
+        unless ($modcount eq $totalmods) {
+            $modoutput .= qq~<a href="$profileprog?action=show&member=$cleanedmodname">$name</a>, ~;
+            }
+            else {
+                $modoutput .= qq~<a href="$profileprog?action=show&member=$cleanedmodname">$name</a>~;
+                }
+    if ($inmembername eq $name) {
+        $inmembmod = "yes";
+        }
+    $modcount++
+    }
+    
+unless ($inmembmod eq "yes") { $inmembmod = "no"; }
+}
+
+###########################
+# error routine 
+
+sub error {
+my $errorinfo = shift;
+($where, $errormsg) = split(/\&/, $errorinfo);
+
+$inmembername = cookie("amembernamecookie");
+$inpassword = cookie("apasswordcookie");
+
+#&title;
+
+$output .= qq~
+<table cellpadding=0 cellspacing=0 border=0 width=$tablewidth align=center>
+    <tr>
+        <td width=30% rowspan=2><img src="$imagesurl/images/$boardlogo" border=0></td>
+        <td valign=top align=left><font face=$font color=$fontcolormisc size=$dfontsize2>
+        &nbsp;&nbsp;<img src="$imagesurl/images/closedfold.gif" border=0><a href="$forumsummaryprog">&nbsp;&nbsp;$boardname</a>
+	     <br>
+        &nbsp;&nbsp;<img src="$imagesurl/images/bar.gif" border=0><img src="$imagesurl/images/openfold.gif" border=0>&nbsp;&nbsp;$ibtxt{'0120'}: $where
+        </td>
+    </tr>
+</table>
+<p>
+<table cellpadding=0 cellspacing=0 border=0 width=$tablewidth bgcolor=$tablebordercolor align=center>
+    <tr>    
+        <td>
+        <table cellpadding=6 cellspacing=1 border=0 width=100%>
+        <tr>
+            <td bgcolor=$miscbacktwo valign=middle align=center><font face=$font color=$fontcolormisc size=$dfontsize2><b>$ibtxt{'0120'}: $where</b></font></td></tr>
+            <tr>
+                <td bgcolor=$miscbackone valign=middle><font face=$font color=$fontcolormisc size=$dfontsize2>
+                <b>$ibtxt{'0121'} $where $ibtxt{'0120'}:</b>
+                <ul>
+                <li><b>$errormsg</b>
+                <li>$ibtxt{'0122'} <a href="$helpprog">$ibtxt{'0123'}</a>?
+                </ul>
+                <b>$ibtxt{'0124'} $where $ibtxt{'0120'}:</b>
+                <ul>
+                <li>$ibtxt{'0125'}
+                <li>$ibtxt{'0126'}
+                <li><a href="$registerprog">$ibtxt{'0127'}</a> $ibtxt{'0136'}
+                </ul>
+                <br><br>
+                <center><font face=$font color=$fontcolormisc size=$dfontsize2> <a href="javascript:history.go(-1)"> << $ibtxt{'0128'}</a></center>
+                </tr>
+                </td>
+                </table></td></tr></table>
+                ~;
+                
+                &output(
+                -Title   => $boardname, 
+                -ToPrint => $output, 
+                                );
+                }
+
+
+
+##########################
+# Get member info.
+
+sub getmember {
+my $nametocheck = shift;
+
+    $nametocheck =~ s/ /\_/g;
+    $filetoopen = "$ikondir" . "members/$nametocheck.cgi";
+    $filetoopen = &stripMETA($filetoopen);
+    if (-e $filetoopen) {
+        open(FILE,"$filetoopen");
+        $filedata = <FILE>;
+        close(FILE);
+        chomp($filedata);
+  ($membername, $password, $membertitle, $membercode, $numberofposts, $emailaddress, $showemail, $ipaddress, $homepage, $aolname, $icqnumber ,$location ,$interests, $joineddate, $lastpostdate, $signature, $timedifference, $privateforums, $useravatar, $misc1, $misc2, $misc3) = split(/\|/,$filedata);
+   chomp $privateforums;
+
+##Фиксим возможность проникать в закрытые форумы, изменив куки руками by batva
+if (($inmembername eq "Guest") || ($password ne $inpassword)){  
+$inmembername = 'Guest'; 
+$inpassword = ''; 
+%allowedentry = ''; 
+return; 
+}  
+##Отфиксили
+
+            if($privateforums) {
+            @private = split(/&/,$privateforums);
+            foreach $accessallowed (@private) {
+                chomp $accessallowed;
+                ($access, $value) = split(/=/,$accessallowed);
+                $allowedentry{$access} = $value;
+                }
+            }
+        }
+    else { $userregistered = "no"; }
+    }
+
+##Сохраните подпрограмму тут, она нужна
+
+sub gettopicmember {
+my $nametocheck = shift;
+$nametocheck =~ s/ /\_/g;
+ my  $filetoopen = "$ikondir" . "members/$nametocheck.cgi";
+   $filetoopen = &stripMETA($filetoopen);
+    if (-e $filetoopen) {
+        open(FILE,"$filetoopen");
+        flock(FILE,1);
+        $filedata = <FILE>;
+        close(FILE);
+        chomp($filedata);
+($membername,$password,$membertitle,$membercode,$numberofposts,$emailaddress,$showemail,$ipaddress,$homepage,$aolname,$icqnumber,$location,$interests,$joineddate,$lastpostdate,$signature,$timedifference,$privateforums,$useravatar,$misc1,$misc2,$misc3) = split(/\|/,$filedata);
+   }# and if (-e $filetoopen)
+ 
+    else {$userregistered = "no"; }
+    } #end sub
+
+sub getmemberstime {
+    local($nametocheck) = @_;
+    $nametocheck =~ s/ /\_/g;
+    $filetoopen = "$ikondir" . "members/$nametocheck.cgi";
+    $filetoopen = &stripMETA($filetoopen);
+        open(FILE,"$filetoopen");
+          flock(FILE,2);
+        $filedata = <FILE>;
+        close(FILE);
+        ($trash, $trash, $trash, $trash, $trash, $trash, $trash, $trash, $trash, $trash, $trash ,$trash ,$trash, $trash, $trash, $trash, $timedifferencevalue, $trash) = split(/\|/,$filedata);
+        }
+
+sub getlastvisit {
+    $lv = cookie("templastvisit");
+    if (! $lv) {
+        $lv = cookie("lastvisit");
+        if (! $lv) { $ctime = time; $lv = "$inforum-$ctime--"; }
+       $tempvisitcookie = cookie(-name    =>   "templastvisit",
+                                 -path    =>   "$cookiepath",
+                                 -value   =>   "$lv");
+        }
+    @pairs = split(/\--/,$lv);
+    foreach (@pairs) { #
+        ($n,$val) = split(/\-/,$_);
+        $lastvisitinfo{$n} = "$val";
+        } #
+    } # endroute
+
+sub setlastvisit { #
+    local($tinfo) = @_;
+    ($tid,$tv) = split(/\,/,$tinfo);
+    $lastvisit = cookie("lastvisit");
+    @newv= ""; $u = "0"; #
+    @pairs = split(/\--/,$lastvisit);
+    foreach (@pairs) { #
+        ($n,$val) = split(/\-/,$_);
+        if ("$tid" eq "$n") {
+            $u = "1"; $val = $tv;
+            } #
+        push(@newv, "$n-$val--");
+        } #
+
+    if ($u eq "0" && $tinfo ne "") { push(@newv,"$tid-$tv--"); }
+    $nfo = ""; $nfo = join("",@newv); ##
+    $permvisitcookie = cookie(-name    =>   "lastvisit",
+                              -value   =>   "$nfo",
+                              -path    =>   "$cookiepath",
+                              -expires =>   "+30d");
+    if ($mv eq "1") {
+    $tempvisitcookie = cookie(-name    =>   "templastvisit",
+                              -value   =>   "$nfo",
+                              -path    =>   "$cookiepath");
+        }
+    }
+
+
+
+sub numerically { $a <=> $b }
+sub alphabetically { lc($a) cmp lc($b) }
+
+
+
+###########################
+# Who's online feature.
+
+sub whosonline {
+    local($instruct) = @_;
+    ($tempusername, $where, $method) = split(/\|/, $instruct);
+
+    $guests = 0;
+    $members = 0;
+    $currenttime = time;
+    $userexpire = $currenttime - ($membergone * 60);
+    
+    $ipaddress = $ENV{'REMOTE_ADDR'};
+    &getmember("$inmembername");
+    if (($tempusername eq "Guest") || $tempusername eq "") { 
+    $tempusername = "Guest"; 
+    }  
+    
+        $filetoopen = "$ikondir" . "data/onlinedata.dat";
+        $filetoopen = &stripMETA($filetoopen);
+        open(FILE,"$filetoopen");
+        @onlinedata = <FILE>;
+        close(FILE);
+            
+        open(FILE,">$filetoopen");
+          flock(FILE, 2);
+        $memberprinted = "no";
+        foreach $line (@onlinedata) {
+                chomp $line;
+                ($savedusername, $savedtime, $savedwhere) = split(/\|/, $line);
+                $savedusername =~ s/\_/ /g;
+                $tempusername =~ s/\_/ /g;
+                $savedusername = &unHTML($savedusername);
+                $tempusername  = &unHTML($tempusername);
+                    unless ("$userexpire" > "$savedtime") { 
+                    if ("$savedusername" ne "$tempusername") { print FILE "$line\n"; }
+                    elsif ("$savedusername" eq "$tempusername") { print FILE $savedusername."|$currenttime|$where\n"; $memberprinted = "yes";}
+                    }
+                } # end foreach
+        if ($memberprinted eq "no") { print FILE "$tempusername|$currenttime|$where\n";}        
+        close(FILE);
+    
+        if ($method eq "$ibtxt{'0016'}") {
+        
+            $filetoopen = "$ikondir" . "data/onlinedata.dat";
+            $filetoopen = &stripMETA($filetoopen);
+            open(FILE,"$filetoopen");
+            @onlinedata = <FILE>;
+            close(FILE);
+            foreach $line (@onlinedata) {
+                chomp $line;
+                ($savedusername, $savedtime, $savedwhere) = split(/\|/, $line);
+                $lookfor = substr($savedusername, 0, 5);
+                if ($lookfor eq "$ibtxt{'0043'}") { $guests++; }
+                else {
+                $members++;
+                $cleanmember = $savedusername;
+                $cleanmember =~ s/ /\_/g;
+                $savedusername = substr($savedusername,0,20) if length $savedusername > 19;
+                $memberoutput .= qq~&raquo; <a href="$profileprog?action=show&member=$cleanmember">$savedusername </a>~;
+                }
+            }
+        }
+} # end routine
+
+
+###########################
+# Forum Jump
+
+sub forumjump {
+
+$jumphtml .= qq~
+<SCRIPT LANGUAGE="JavaScript">
+<!-- 
+function menu(){
+var URL = document.jump.jumpto.options[document.jump.jumpto.selectedIndex].value;
+top.location.href = URL; target = '_self';
+}
+// -->
+</SCRIPT>
+<form action="$boardurl/$forumsprog" method="post" name="jump">
+<select name="jumpto" onchange="menu()">
+<option value="$boardurl/$forumsummaryprog">$ibtxt{'0131'}
+~;        
+
+$filetoopen = "$ikondir" . "data/allforums.cgi";
+$filetoopen = &stripMETA($filetoopen);
+open(FILE, "$filetoopen") or die "$ibtxt{'5008'}";
+  flock(FILE, 2);
+@forums = <FILE>;
+close(FILE);
+
+foreach $forum (@forums) { #start foreach @forums
+    chomp $forum;
+    ($forumid, $category, $categoryplace, $forumname, $forumdescription) = split(/\|/,$forum);
+    $rearrange = ("$categoryplace|$category|$forumname|$forumdescription|$forumid");
+    push (@rearrangedforums, $rearrange);
+
+} # end foreach (@forums)
+
+@finalsortedforums = sort(@rearrangedforums);
+
+foreach $sortedforums (@finalsortedforums) { #start foreach 
+    ($categoryplace, $category, $forumname, $forumdescription, $forumid) = split(/\|/,$sortedforums);
+    
+    if ($categoryplace ne $lastcategoryplace) { #start if $categoryplace
+        $jumphtml .= "<option value=\"$boardurl/$forumsummaryprog\">\n";
+        $jumphtml .= "<option value=\"$boardurl/$forumsummaryprog\">-- &nbsp; $category\n";
+        $jumphtml .= "<option value=\"$boardurl/$forumsprog?forum=$forumid\" target=\"_self\"> $forumname\n";
+        }
+        else {
+            $jumphtml .= "<option value=\"$boardurl/$forumsprog?forum=$forumid\" target=\"_self\"> $forumname\n";
+            }
+     $lastcategoryplace = $categoryplace;
+     } # end foreach 
+     
+$jumphtml .= qq~</select></form>\n~;
+
+} #end routine 
+
+
+###########################
+# Emoticon Swopper
+
+
+sub doemoticons {
+    
+        my $post = shift;
+
+        $dirtoopen = "$imagesdir" . "emoticons";
+        opendir (DIR, "$dirtoopen") or die "$ibtxt{'1204'} $dirtoopen )"; 
+        @dirdata = readdir(DIR);
+        closedir (DIR);
+
+        @emoticondata = grep(/gif/,@dirdata);
+        @emoticondata = sort @emoticondata;
+        
+        foreach $picture (@emoticondata) {
+            $smileyname = $picture;
+            $smileyname =~ s/\.gif//g;
+            $post =~ s/\:$smileyname\:/\<img src=\"$imagesurl\/emoticons\/$picture\" border=\"0\">/g;
+            }
+        return $post;
+        }
+
+sub cleaninput {
+my $text = shift;
+$text =~ s/<!--(.|\n)*-->//g;
+$text =~ s/<script>/\&lt;script\&gt;/ig;
+$text =~ s/<script/\&lt;script/ig;
+$text =~ s/<scr/\&lt;\&\#115;\&\#099;&\#\114;/ig;
+$text =~ s/\&/\&amp;/g;
+$text =~ s/"/\&\#34;/g;
+$text =~ s/  / \&nbsp;/g;
+$text =~ s/</\&lt;/g;
+$text =~ s/>/\&gt;/g;
+$text =~ s/\|/\&#0124;/g;
+$text =~ s/\t//g;
+$text =~ s/\r//g;
+$text =~ s/  / /g;
+$text =~ s/\n\n/<p>/g;
+$text =~ s/\n/<br>/g;
+$text =~ s/\`/\&#96;/g; 
+$text =~ s/\'/\&#39;/g; 
+$text =~ s/\’/\&#146;/g;
+return $text;
+}
+
+sub unHTML {
+my $text = shift;
+$text =~ s/<!--(.|\n)*-->//g;
+$text =~ s/<script>/\&lt;script\&gt;/ig;
+$text =~ s/\&/\&amp;/g;
+$text =~ s/"/\&quot;/g;
+$text =~ s/'/\&\#39;;/g;
+$text =~ s/  / \&nbsp;/g;
+$text =~ s/</\&lt;/g;
+$text =~ s/>/\&gt;/g;
+$text =~ s/\|/\&#0124;/g;
+return $text;
+}
+
+sub cleanarea {
+my $text = shift;
+$text =~ s/<!--(.|\n)*-->//g;   
+$text =~ s/<script>/\&lt;script\&gt;/ig;
+$text =~ s/\&/\&amp;/g;
+$text =~ s/"/\&quot;/g;
+$text =~ s/  / \&nbsp;/g;
+$text =~ s/</\&lt;/g;
+$text =~ s/>/\&gt;/g;
+$text =~ s/\|/\&#0124;/g;
+$text =~ s/\t/ \&nbsp; \&nbsp; \&nbsp;/g;
+$text =~ s/\t//g;
+$text =~ s/\r//g;
+$text =~ s/  / /g;
+$text =~ s/\n\n/<p>/g;
+$text =~ s/\n/<br>/g;
+return $text;
+}
+
+sub stripMETA {
+my $file = shift;
+$file =~ s/\&//g;
+$file =~ s/\;//g;  
+$file =~ s/\`//g;
+$file =~ s/\'//g;
+$file =~ s/"//g;
+$file =~ s/\|//g;
+$file =~ s/\*//g;
+$file =~ s/\?//g;
+$file =~ s/<//g;
+$file =~ s/>//g;
+$file =~ s/\^//g;
+$file =~ s/\(//g;
+$file =~ s/\)//g;
+$file =~ s/\[//g;
+$file =~ s/\]//g;
+$file =~ s/\{//g;
+$file =~ s/\}//g;
+$file =~ s/\$//g;
+$file =~ s/\n//g;
+$file =~ s/\r//g;
+$file =~ s/\.\.//g;
+return $file;
+}
+
+sub dateformat { 
+   my $time = shift; 
+   (my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime($time); 
+  # my @months = ('Янв.','Февр.','Март','Апр.','Май','Июнь','Июль','Авг.','Сент.','Окт.','Нояб.','Дек.'); 
+   $mon = $months[$mon]; 
+   if ($min < 10) { $min = "0$min"; } 
+   if ($sec < 10) { $sec = "0$sec"; } 
+   $year = $year + 1900; 
+   return "$hour:$min - $mday $mon, $year"; 
+   } 
+
+sub longdate { 
+   my $time = shift; 
+   (my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime($time); 
+  # my @months = ('Янв.','Февр.','Март','Апр.','Май','Июнь','Июль','Авг.','Сент.','Окт.','Нояб.','Дек.'); 
+   $year = $year + 1900; 
+   return "$mday $months[$mon], $year"; 
+   } 
+
+sub shortdate { 
+   my $time = shift; 
+   (my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime($time); 
+   $mon++; 
+   $year = $year + 1900; 
+   $year =~ s/20//isg; 
+   return "$mday.$mon.$year"; 
+   } 
+
+sub shorttime { 
+   my $time = shift; 
+   (my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime($time); 
+   $mon++; 
+   if ($min < 10) { $min = "0$min"; } 
+   if ($sec < 10) { $sec = "0$sec"; } 
+   return "$hour:$min" . "&nbsp;"; 
+   } 
+
+sub dateformatshort { 
+   my $time = shift; 
+   (my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime($time); 
+   my $year = $year - 100 if ($year >= 100); 
+   if ($year < 10) { $year = "0$year"; } 
+   if ($mday < 10) { $mday = "0$mday"; } 
+   if ($mon < 10) { $mon = "0$mon"; } 
+   return "$hour:$min&nbsp; ($mday/$mon/$year)"; 
+   } 
+
+sub joineddate { 
+   my $time = shift; 
+   (my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime($time); 
+   my @months = ('Янв.','Февр.','Март','Апр.','Май','Июнь','Июль','Авг.','Сент.','Окт.','Нояб.','Дек.'); 
+   $year = $year + 1900; 
+   return "$months[$mon] $year"; 
+   } 
+
+sub printmessenger {
+
+   my %args = (
+   -Title        => "", 
+   -ToPrint      => "",
+   -Version      => "", 
+   @_, 
+   ); 
+
+   my $title         = $args{-Title}; 
+   my $output        = $args{-ToPrint}; 
+   my $versionnumber = $args{-Version};
+
+    
+    print qq~
+    <html>
+    <head>
+    <title>$title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <SCRIPT>
+    <!--
+    function openwin(url, width, height) {
+        var Win = window.open(url,"openwin",'width=' + width + ',height=' + height + ',resizable=1,scrollbars=yes,menubar=yes,status=yes' );
+        }
+    //-->
+    </SCRIPT>
+    
+    <style type="text/css">
+    <!--
+
+    SELECT, option, textarea, input {   FONT-FAMILY:verdana,arial;color:#000000; FONT-SIZE: 10px; background-color:#eeeeee  }
+    a:link,a:visited,a:active {text-decoration:none; color:#660000; font-weight:plain;}
+    a:hover {text-decoration:none; color:#990000; font-weight: plain;}
+    
+    -->
+    </style>
+    </head>
+    <body bgcolor=#ffffff topmargin=5 leftmargin=5>
+    ~;
+
+
+print qq~$output\n~;
+print qq~<font face=arial size=$dfontsize1 color="$fontcolormisc"><br><br><center><a href="http://www.ikonboard.com" target="_blank">$ibtxt{'1603'} Ikonboard $versionnumber</a></center></body></html>~;
+exit;
+
+}
+
+
+sub messengererror {
+local($errorinfo) = @_;
+($where, $errormsg) = split(/\&/, $errorinfo);
+
+$output = qq~
+<table cellpadding=0 cellspacing=0 border=0 width=95% bgcolor=$tablebordercolor align=center>
+	<tr>	
+		<td>
+		<table cellpadding=6 cellspacing=1 border=0 width=100%>
+		<tr>
+   			<td bgcolor=$miscbacktwo valign=middle align=center><font face=$font color=$fontcolormisc size=$dfontsize2><b>$ibtxt{'0120'}: $where</b></font></td></tr>
+   			<tr>
+   				<td bgcolor=$miscbackone valign=middle><font face=$font color=$fontcolormisc size=$dfontsize2>
+   				<b>$ibtxt{'0121'} $where $ibtxt{'0120'}:</b>
+   				<ul>
+   				<li><b>$errormsg</b>
+   				<li>$ibtxt{'0122'} <a href="$helpprog">$ibtxt{'0123'}</a>?
+   				</ul>
+   				<b>$ibtxt{'0124'} $where $ibtxt{'0120'}:</b>
+   				<ul>
+   				<li>$ibtxt{'0125'}
+   				<li>$ibtxt{'0126'}
+				<li><a href="$registerprog">$ibtxt{'0127'}</a> $ibtxt{'0136'}
+  				</ul>
+   				</tr>
+   				</td></tr>
+   				<tr>
+   				<td bgcolor=$miscbacktwo valign=middle align=center><font face=$font color=$fontcolormisc size=$dfontsize2> <a href="javascript:history.go(-1)"> << $ibtxt{'0128'}</a>
+   				</td></tr>
+   				</table></td></tr></table>
+				~;
+   
+	&printmessenger(
+            -Title   => "$boardname - Messenger", 
+            -ToPrint => $output, 
+            -Version => $versionnumber 
+            );
+
+}
+
+
+
+
+
+sub output {
+
+        my %args = (
+        -Title        => "", 
+        -ToPrint      => "",
+        -Version      => "", 
+        @_, 
+        ); 
+
+        my $title         = $args{-Title}; 
+        my $output        = $args{-ToPrint}; 
+        my $versionnumber = $args{-Version};
+
+        my $filetoopen = "$ikondir" . "data/template.dat";
+        $filetoopen = &stripMETA($filetoopen);
+        open(FILE,"$filetoopen") or die "$ibtxt{'5009'}";
+        my @templatedata = <FILE>;
+        close(FILE);
+
+        $boardcopyright = qq(&copy\; $copyrightinfo &#0124\;) if $copyrightinfo;
+        
+        ### Removing this invalidates your license. Please keep intact.
+        my $copyright = qq~
+        <p>
+        <table width=80% align=center cellpadding=3 cellspacing=0>
+        <tr><td align=center valign=middle>
+        <font face=verdana color=$fontcolormisc size=$dfontsize1>
+        $boardcopyright <a href="$boardurl/privacy.cgi">$ibtxt{'0133'}</a><br><br>
+        $ibtxt{'1603'} <a href="http://www.ikonboard.com">Ikonboard $versionnumber</a><br>&copy; 2000 Ikonboard.com
+        </font></td></tr></table>
+        <p>
+        ~;
+        ### Keep this program free, and leave that code intact.
+        
+       my $maintmodetext = qq~ 
+<table width=80% align=center cellpadding=3 cellspacing=0> 
+<tr><td align=center valign=middle> 
+<font face=verdana color=$fontcolormisc size=$dfontsize2> 
+<p><h3><b>$maintenance_message</b></h3><p> 
+$boardcopyright <a href="$boardurl/privacy.cgi">$ibtxt{'0133'}</a><br><br> 
+Powered by <a href="http://www.ikonboard.com">Ikonboard $versionnumber</a><br>&copy; 2000 Ikonboard.com 
+</font></td></tr></table> 
+~; 
+foreach my $line (@templatedata) { 
+$line =~ s/\$page_title/$title/sg; 
+if ($maintenancemode eq "y") { 
+$line =~ s/\$ikonboard_main/\n$maintmodetext\n\n\n/sg; 
+} 
+else{ 
+$line =~ s/\$ikonboard_main/$output\n\n$copyright\n/sg; 
+} 
+print $line; 
+} 
+exit; 
+
+} 
+
+sub helpfiles {
+
+my $helptype = shift;
+my $helpurl = qq~<a href="javascript:openScript('help.cgi?helpon=$helptype',500,400)">~;
+return $helpurl;
+}
+
+sub ikoncode {
+
+    my $post = shift;    
+
+###not java### by DimoN
+ $post =~ s/(\[img\])(.*?)(script:)(.*?)(\[\/img\])/$2$3$4\[<font color=red>Недопустимое действие! :moderator:<\/font>\]/isg; 
+###not java end### 
+###not view-source &mailto###
+ $post =~ s/(\[img\])(.*?)(view-source:)(.*?)(\[\/img\])/$2$3$4\[<font color=red>Недопустимое действие! :moderator:<\/font>\]/isg; 
+ $post =~ s/(\[img\])(.*?)(mailto:)(.*?)(\[\/img\])/\[<font color=red>Недопустимое действие! :moderator:<\/font>]/isg;   
+
+###not view-source end### 
+    $post =~ s/\<p>/<br><br>/isg;
+    $post =~ s|\[\[|\{\{|g;
+    $post =~ s|\]\]|\}\}|g;
+    $post =~ s|\n\[|\[|g;
+    $post =~ s|\]\n|\]|g;
+    $post =~ s|<br>| <br>|g;
+    $post =~ s|\[hr\]\n|\<hr width=40\% align=left>|g;
+    $post =~ s|\[hr\]|\<hr width=40\% align=left>|g;
+    
+    ##таблица
+     $post =~ s/\[table\]\[tr\]/\[table\]/isg;     
+     while ($post =~ s{\[table\]([\S\s].+?[\S\s])\[/table\]} 
+        {my $Tmp = $1; 
+        $Tmp =~ s/\<br>/ /g; 
+        $Tmp =~ s/\[tr\]/ <\/td><\/tr><tr class=lgf><td>/g; 
+            $Tmp =~ s/\[tab\]/ <\/td><td>/g; 
+            $Tmp = qq|<table cellpadding=\"3\" cellspacing=\"0\" bgcolor=\"#FFFFFF\" width=\"75%\" border=\"1\" bordercolor=\"#EEEEEE\"><tr class=lgf><td>$Tmp<\/td><\/tr><\/table>|; 
+         }exisog) {} 
+## end таблица         
+    
+    
+    $post =~ s/\[q\]\s*(.*?)\s*\[\/q\]/<blockquote class=n2><span class=s>Цитата:<\/span><hr noshade size=1>$1<hr noshade size=1><\/blockquote>/isg;
+    $post =~ s/\[quote\]\s*(.*?)\s*\[\/quote\]/<blockquote class=n2><span class=s>Цитата:<\/span><hr noshade size=1>$1<hr noshade size=1><\/blockquote>/isg;
+  
+    $post =~ s/\[url\](\S+?)\[\/url\]/<a href=\"$1\"\ target=\"_blank\">$1<\/a>/isg;
+    $post =~ s/\[url=http:\/\/(\S+?)\]/<a href=\"http:\/\/$1\"\ target=\"_blank\">/isg;
+    $post =~ s/\[url=(\S+?)\]/<a href=\"http:\/\/$1\"\ target=\"_blank\">/isg;
+    $post =~ s/\[\/url\]/<\/a>/isg;
+
+    $post =~ s/(^|\s|\<br\>)(http:\/\/\S+)/$1<a href="$2" target=_blank>$2<\/a> /isg; 
+    $post =~ s/(^|\s|\<br\>)(https:\/\/\S+)/$1<a href="$2" target=_blank>$2<\/a> /isg; 
+    $post =~ s/(^|\s|\<br\>)(ftp:\/\/\S+)/$1<a href="$2" target=_blank>$2<\/a> /isg; 
+    $post =~ s/(^|\s|\<br\>)(www\.\S+)/$1<a href="http:\/\/$2" target=_blank>$2<\/a> /isg;
+
+
+# Добавляем новые коды [c] и [s]
+
+    $post =~ s/\[c\](.*?)\[\/c\]/<center>$1<\/center>/isg;
+    $post =~ s/\[s\](.*?)\[\/s\]/<span class=s>$1<\/span>/isg;
+
+    $post =~ s/\[b\]/<b>/isg;
+    $post =~ s/\[\/b\]/<\/b>/isg;
+    $post =~ s/\[i\]/<i>/isg;
+    $post =~ s/\[\/i\]/<\/i>/isg;
+    $post =~ s/\[u\]/<u>/isg;
+    $post =~ s/\[br\]/<br>/isg;
+    $post =~ s/\[\/u\]/<\/u>/isg;
+    $post =~ s/\[img\](.+?)\[\/img\]/<img src=\"$1\">/isg;
+    
+#Опять фиксим яву by batva
+$post =~ s/(\[size=)(\d+)\](.+?)(\[\/size\])/<font size=\"$2\">$3<\/font>/isg;   
+$post =~ s/(\[font=)([A-Z a-z-]+)\](.+?)(\[\/font\])/<font face=\"$2\">$3<\/font>/isg;
+$post =~ s/(\[color=)([A-Za-z]+|[#\dA-F]+)\](.+?)(\[\/color])/<font color=\"$2\">$3<\/font>/isg;  
+#end фиксим яву 
+    
+    $post =~ s/\[\/color\]/<\/font>/isg;
+    $post =~ s/\\http:\/\/(\S+)/<a href=\"http:\/\/$1\"\ target=\"_blank\">http:\/\/$1<\/a>/isg;
+    $post =~ s/(\[list\])(.+?)(\[\/list\])/<UL>$2<\/UL>/isg;
+    $post =~ s/(\[list=)(A|1)(\])(.+?)(\[\/list\])/<OL TYPE=$2>$4<\/OL>/isg;
+    $post =~ s/(\[\*\])/<LI>/isg;
+    $post =~ s/\[code\](.+?)\[\/code\]/<blockquote><font size=\"1\" face=\"Courier New\">Код:<\/font><hr><font face=\"Courier New\" size=\"2\"><pre>$1<\/pre><\/font><hr><\/blockquote>/isg;     
+    $post =~ s/\[code\](.+?)\[\/code\]/<blockquote><font size=\"1\" face=\"Courier New\">Код:<\/font><hr><font face=\"Courier New\"><pre>$1<\/pre><\/font><hr><\/blockquote>/isg;
+
+#Выключаем автоподсветку мыла DimoN    
+    #$post =~ s/(\S+?)\@(\S+)/<a href=\"mailto:$1\@$2\"\>$1\@$2<\/a>/ig;
+    $post =~ s/\[email=(\S+?)\]/<a href=\"mailto:$1\">/isg;
+    $post =~ s/\[\/email\]/<\/a>/isg;
+    $post =~ s/(\[FLASH SIZE=1\])(.+?)(\[\/FLASH\])/<OBJECT WIDTH=80 HEIGHT=60><PARAM NAME=movie VALUE="$2"><PARAM NAME=quality VALUE=high><PARAM NAME=scale VALUE=exactfit><PARAM NAME=menu VALUE=false><PARAM NAME=bgcolor VALUE=$BGColor><EMBED src="$2" quality=high menu=false scale=exactfit WIDTH=80 HEIGHT=60 swLiveConnect=true TYPE="application\/x-shockwave-flash"><\/EMBED><\/OBJECT>/isg;
+    $post =~ s/(\[FLASH SIZE=2\])(.+?)(\[\/FLASH\])/<OBJECT WIDTH=160 HEIGHT=120><PARAM NAME=movie VALUE="$2"><PARAM NAME=quality VALUE=high><PARAM NAME=scale VALUE=exactfit><PARAM NAME=menu VALUE=false><PARAM NAME=bgcolor VALUE=$BGColor><EMBED src="$2" quality=high menu=false scale=exactfit WIDTH=160 HEIGHT=120 swLiveConnect=true TYPE="application\/x-shockwave-flash"><\/EMBED><\/OBJECT>/isg;
+    $post =~ s/(\[FLASH SIZE=3\])(.+?)(\[\/FLASH\])/<OBJECT WIDTH=320 HEIGHT=240><PARAM NAME=movie VALUE="$2"><PARAM NAME=quality VALUE=high><PARAM NAME=scale VALUE=exactfit><PARAM NAME=menu VALUE=false><PARAM NAME=bgcolor VALUE=$BGColor><EMBED src="$2" quality=high menu=false scale=exactfit WIDTH=320 HEIGHT=240 swLiveConnect=true TYPE="application\/x-shockwave-flash"><\/EMBED><\/OBJECT>/isg;
+    $post =~ s/(\[FLASH=)(\S+?)(\,)(.+?)(\])(.+?)(\[\/FLASH\])/ <embed src="$6" menu=false scale=exactfit HEIGHT="$4" WIDTH="$2" quality="high"><\/embed> /isg;
+    $post =~ s/(\[center\])(.+?)(\[\/center\])/<center>$2<\/center>/isg;
+    $post =~ s/(\[sound\])(\S+?)(\.mid|\.midi|\.wav)(\[\/sound\])/<EMBED SRC="$2$3" AUTOSTART=FALSE LOOP=FALSE WIDTH=100><\/EMBED> /isg;
+    $post =~ s|\{\{|\[|g;
+    $post =~ s|\}\}|\]|g;
+    
+    return $post;    
+
+    } # end routine
+
+###########################
+# Preview
+
+
+sub preview {
+
+    $postbackcolor = "$postcolorone";
+    $postfontcolor = "$postfontcolorone";
+    $inpost =~ s/&lt\;br&gt\;&lt\;br&gt\;//g;
+    $post = $inpost;
+    $post =~ s/\n\n/\<p\>/g;
+    $post =~ s/\n/\<br\>/g;
+    
+    
+    $post = &ikoncode("$post");
+    
+    if ($emoticons eq "on") {
+    $post = &doemoticons("$post");
+    $post =~ s/\:\)/<img src=\"$imagesurl\/emoticons\/smile.gif\" border=\"0\">/g;
+    $post =~ s/\;\)/<img src=\"$imagesurl\/emoticons\/wink.gif\" border=\"0\">/g;
+    $post =~ s/\:\(/<img src=\"$imagesurl\/emoticons\/sad.gif\" border=\"0\">/g;
+    $post =~ s/\:o/<img src=\"$imagesurl\/emoticons\/shocked.gif\" border=\"0\">/g;
+    }
+
+    &mischeader("$ibtxt{'0140'}");
+
+    $output .= qq~
+    <table cellpadding=0 cellspacing=0 border=0 width=$tablewidth bgcolor=$tablebordercolor align=center>
+        <tr><td>
+        <table cellpadding=4 cellspacing=1 border=0 width=100%>
+        <tr>
+            <td bgcolor=$titlecolor colspan=2 width=60%><font face="$font" color=$titlefontcolor size=$dfontsize1>$ibtxt{'0134'}</td>
+        </tr>
+        <tr>
+            <td bgcolor="$postbackcolor" rowspan=3 valign="top" width=20%><font face=$posternamefont color=$posternamecolor size=$dfontsize2>
+            <b>$inmembername</b></font></td>
+            <td bgcolor="$postbackcolor" colspan=2><font face="$font" color=$postfontcolor size=$dfontsize2><b>$ibtxt{'0134'}</b> </td></tr>
+        <tr>
+            <td colspan=2 bgcolor="$postbackcolor"><font face="$font" color=$postfontcolor size=$dfontsize2>$post</td></tr></table></td>
+            </tr></table>
+        <p>
+        ~;
+    }
+
+sub getforum {
+
+my $inforum = shift;
+
+$filetoopen = "$ikondir" . "data/allforums.cgi";
+$filetoopen = &stripMETA($filetoopen);
+open(FILE, "$filetoopen") or die "$ibtxt{'5010'} allforums.cgi!";
+  flock(FILE, 2);
+@forums = <FILE>;
+close(FILE);
+
+foreach $forumline (@forums) { #start foreach @forums
+   ($tempno, $trash) = split(/\|/,$forumline);
+   if ($inforum eq $tempno) {
+      ($forumid, $category, $categoryplace, $forumname, $forumdescription, $forummoderator ,$htmlstate ,$idmbcodestate ,$privateforum, $startnewthreads ,$lastposter ,$lastposttime, $threads, $posts, $forumgraphic) = split(/\|/,$forumline);
+      }
+   }
+
+}
+
+sub rebuildLIST {
+    
+    my %IN = (
+        -Forum        => "",
+        @_, 
+        ); 
+ 
+    $dirtoopen = "$ikondir" . "forum$IN{-Forum}";
+    opendir (DIR, "$dirtoopen"); 
+    @dirdata = readdir(DIR);
+    closedir (DIR);
+
+    @entry = grep(/pl/,@dirdata);
+
+    foreach (@entry) {
+        ($id, $tr) = split(/\./,$_);
+        my $file = "$ikondir" . "forum$IN{-Forum}/$id.pl";
+        open (TMP, "$file");
+          flock (TMP, 1);
+        ($topicid, $topictitle, $topicdescription, $threadstate, $threadposts, $threadviews, $startedby, $startedpostdate, $lastposter, $lastpostdate) = split (/\|/,<TMP>);
+        close (TMP);
+        $rr = "$lastpostdate|$topicid|$topictitle|$topicdescription|$threadstate|$threadposts|$threadviews|$startedby|$startedpostdate|$lastposter";
+        push (@dat, $rr);
+        }
+
+       my @sortdat = sort {$b <=> $a} @dat; 
+       undef @dat; 
+        $checkdat = @sortdat;
+        foreach (@sortdat) {
+            chomp $_;
+            ($lastpostdate, $topicid, $topictitle, $topicdescription, $threadstate, $threadposts, $threadviews, $startedby, $startedpostdate, $lastposter) = split (/\|/,$_);
+            $processed_data .= "$topicid|$topictitle|$topicdescription|$threadstate|$threadposts|$threadviews|$startedby|$startedpostdate|$lastposter|$lastpostdate\n" if $topictitle;
+            }
+        if ((($processed_data eq "") || ($processed_data !~ m!\|!)) && ($checkdat != 0)) { &error("Missing Data&Data as corrupted on the server. Please go back and try again"); }
+       
+        my $file = "$ikondir" . "forum$IN{-Forum}/list.cgi";
+        open (LIST, ">$file");
+          flock (LIST, 2);
+        print LIST $processed_data;
+        close (LIST);
+        undef @sortdat;
+        undef $processed_data;
+
+}
+
+sub openFILE {
+
+    my %args = (-FH=>"",-FN=>"",-MD=>"",@_,); 
+    my $FILEHANDLE   = $args{-FH}; 
+    my $filename     = $args{-FN}; 
+    my $method       = $args{-MD};
+
+    $filename = &stripMETA($filename);
+
+    if ($method eq 'r') {
+        open ($FILEHANDLE, $filename);
+          flock $FILEHANDLE, 1;
+        }
+    if ($method eq 'wr') {
+        open ($FILEHANDLE, ">$filename");
+          flock ($FILEHANDLE, 2);
+        }
+    if ($method eq 'wrx') {
+        open ($FILEHANDLE, ">$filename") or die "$ibtxt{'0138'}\, $!";
+          flock ($FILEHANDLE, 2);
+        }
+    if ($method eq 'ap') {
+        open ($FILEHANDLE, ">>$filename") or die "$ibtxt{'0139'}\, $!";
+          flock ($FILEHANDLE, 2);
+        }
+
+    }
+# Used to fix deleted members bug
+
+sub set_up_guest { 
+#$membername = 'Deleted Member';
+$membercode = '';
+$membertitle = 'Deleted';
+$password = '';
+$numberofposts = 'N/A';
+$emailaddress = '';
+$showemail = 'no';
+$ipaddress = '';
+$homepage = '';
+$aolname = '';
+$icqnumber = '';
+$location = '';
+$interests = '';
+$joineddate = '';
+$lastpostdate = '';
+$lastpostdetails = 'This Member has been removed by the board Admin';
+$signature = '';
+$timedifference = '';
+$privateforums = '';
+$useravatar = '';
+$misc1 = '';
+$misc2 = '';
+$misc3 = '';
+   } 
+
+
+
+sub Truncate {
+$char_in_topic = 180 unless $char_in_topic;
+$_[0] =~ s/(\S{$char_in_topic})/$1 /isg; return ($_[0]);
+}
+
+
+sub smilies { 
+$ibsm = qq~ 
+<p> 
+<TABLE align=center width="100%" border=0 cellPadding=3 cellSpacing=1> 
+<TR> 
+<TD><A href="javascript:smilie(':)')"><IMG  border=0 src="$imagesurl/emoticons/smile.gif"></A></TD> 
+<TD><A href="javascript:smilie(';)')"><IMG  border=0 src="$imagesurl/emoticons/wink.gif"></A></TD> 
+<TD><A href="javascript:smilie(':(')"><IMG  border=0 src="$imagesurl/emoticons/sad.gif" ></A></TD> 
+<TD><A href="javascript:smilie(':D')"><IMG  border=0 src="$imagesurl/emoticons/biggrin.gif"></A></TD> 
+<TD><A href="javascript:smilie(':lol:')"><IMG  border=0 src="$imagesurl/emoticons/lol.gif"></A></TD> 
+                             
+</TR> 
+</TABLE><p> 
+~;                 
+return $ibsm; 
+}  
+
+1;

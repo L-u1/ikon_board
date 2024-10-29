@@ -1,0 +1,28 @@
+$forumsummaryprog = "ikonboard.cgi";
+$forumsprog = "forums.cgi";
+$threadprog = "topic.cgi";
+$postprog = "post.cgi";
+$registerprog = "register.cgi";
+$profileprog = "profile.cgi";
+$postingsprog = "postings.cgi";
+$announceprog = "announcements.cgi";
+$onlineprog = "whosonline.cgi";
+$lostpasswordprog = "profile.cgi?action=lostpassword";
+$loginprog = "loginout.cgi";
+$viewipprog = "viewip.cgi";
+$searchprog = "search.cgi";
+$ikonfriendprog = "ikonfriend.cgi";
+$helpprog = "help.cgi";
+$printpageprog = "printpage.cgi";
+$miscprog = "misc.cgi";
+$adminprog = "admincenter.cgi";
+$stylesprog = "setstyles.cgi";
+$varsprog = "setvariables.cgi";
+$membertitlesprog = "setmembertitles.cgi";
+$setforumsprog = "setforums.cgi";
+$setmembersprog = "setmembers.cgi";
+$messengerprog = "messenger.cgi";
+$newpostsprog = "newposts.cgi";
+$forumoptionsprog = "forumoptions.cgi";
+
+1;

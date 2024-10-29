@@ -1,0 +1,18 @@
+$mpostmark1 = "25";
+$mtitle1 = "Newbie";
+$mgraphic1 = "pips1.gif";
+$mpostmark2 = "50";
+$mtitle2 = "Junior Member";
+$mgraphic2 = "pips2.gif";
+$mpostmark3 = "100";
+$mtitle3 = "Member";
+$mgraphic3 = "pips3.gif";
+$mpostmark4 = "150";
+$mtitle4 = "Full Member";
+$mgraphic4 = "pips4.gif";
+$mpostmark5 = "250";
+$mtitle5 = "Advanced Member";
+$mgraphic5 = "pips5.gif";
+$admingraphic = "pips6.gif";
+$submit = "";
+1;
